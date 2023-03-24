@@ -18,7 +18,7 @@ var sequelize = new Sequelize('liqbwhwn', 'liqbwhwn', 'Pv4KVMb3EW061aj9CMRbPEmik
     query: { raw: true }
 });
 
-var Table = sequelize.define('User', {
+var User = sequelize.define('User', {
     id:{
         type: Sequelize.INTEGER,
         primaryKey: true,
@@ -55,7 +55,7 @@ app.get('/update-user', (req, res) => {
     const id = req.query.id;
 
     sequelize.sync().then(function () {
-        Table.findAll({ 
+        User.findAll({ 
             where: {
                 id: id
             }
@@ -89,7 +89,7 @@ app.post('/update-user', (req, res) => {
     const email = req.body.email;
 
         sequelize.sync().then(function () {
-            Table.update({
+            User.update({
                 name: name,
                 email: email
             }, {
@@ -124,7 +124,7 @@ app.get('/delete-user', (req, res) => {
     sequelize.sync().then(function () {
 
         // remove User 3 from the database
-        Table.destroy({
+        User.destroy({
             where: { id: id } // only remove user with id == 3
         }).then(function () { 
             res.redirect("/");
@@ -141,7 +141,7 @@ app.post('/insert-user', (req, res) => {
         sequelize.sync().then(function () {
 
             // create a new "Project" and add it to the database
-            Table.create({
+            User.create({
                 name: name,
                 email: email
             }).then(function (data) {
@@ -156,7 +156,7 @@ app.post('/insert-user', (req, res) => {
 app.get('/', (req, res) => {
     sequelize.sync().then(function () {
         // return all first names only
-        Table.findAll({ }).then(function(data){        
+        User.findAll({ }).then(function(data){        
             res.render('index', { users: data, layout:false });
         });
     });
